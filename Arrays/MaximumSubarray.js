@@ -26,45 +26,19 @@ Constraints:
 1 <= nums.length <= 105
   - 104 <= nums[i] <= 104 */
 
-const maximumSubarray = arr => {
-  let cloneArr = [...arr]
-  let max = cloneArr.reduce((prevValue, v) => prevValue + v, 0)
-  let maxSub = [...arr]
-  let subSum = max
-  while (cloneArr.length > 1) {
-    let l = 0
-    let r = cloneArr.length - 1
-    if (cloneArr[l] < cloneArr[r]) {
-      subSum -= cloneArr[l]
-      cloneArr.shift()
-    } else if (cloneArr[r] < cloneArr[l]) {
-      subSum -= cloneArr[r]
-      cloneArr.pop()
-    } else if (cloneArr[l] === cloneArr[r]) {
-      while (l < r) {
-        l++
-        r--
-        if (cloneArr[l] < cloneArr[r]) {
-          subSum -= cloneArr[0]
-          cloneArr.shift()
-          break
-        } else if (cloneArr[r] < cloneArr[l]) {
-          subSum -= cloneArr[cloneArr.length - 1]
-          cloneArr.pop()
-          break
-        }
-      }
-      if (l > r) {
-        subSum -= cloneArr[r]
-        cloneArr.pop()
-      }
-    }
-    if (subSum > max) {
-      max = subSum
-      maxSub = [...cloneArr]
-    }
-  }
-  return { subArray: maxSub, max: max }
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+const maxSubArray = arr => {
+  let max = arr[0]
+  let curSum = 0
+  arr.forEach(e => {
+    if (curSum < 0) curSum = 0
+    curSum += e
+    if (max < curSum) max = curSum
+  })
+  return max
 }
 
-console.log(maximumSubarray([5, 4, -1, 7, 8]))
+console.log(maxSubArray([5, 4, -1, 7, 8]))
