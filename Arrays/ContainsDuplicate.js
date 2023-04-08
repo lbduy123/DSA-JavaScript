@@ -24,12 +24,12 @@ Constraints:
  * @return {boolean}
  */
 const containsDuplicate = function (nums) {
-  let checkArr = []
+  let checkSet = new Set()
   for (let num of nums) {
-    if (checkArr[num] !== undefined) {
+    if (checkSet.has(num)) {
       return true
     }
-    checkArr[num] = true
+    checkSet.add(num)
   }
   return false
 };

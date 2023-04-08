@@ -37,7 +37,7 @@ Could you do it in -place with O(1) extra space ? */
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var rotate = function (nums, k) {
-  while (k > nums.length) k -= nums.length
+  k = k % nums.length
   let rotatedPart = nums.splice(0, nums.length - k)
   for (let i = 0; i < rotatedPart.length; i++) {
     nums.push(rotatedPart[i])
@@ -47,3 +47,4 @@ var rotate = function (nums, k) {
 
 console.log(rotate([1, 2, 3, 4, 5, 6, 7], 3))
 console.log(rotate([-1, -100, 3, 99], 2))
+console.log(rotate([1, 2], 5))

@@ -29,12 +29,14 @@ Constraints:
 Only one valid answer exists.*/
 
 const twoSum = (nums, target) => {
-  const compliments = []
+  const compliments = new Map()
   for (let i = 0; i < nums.length; i++) {
-    if (compliments[nums[i]] !== undefined)
-      return [compliments[nums[i]], i]
-    else compliments[target - nums[i]] = i
+    if (compliments.has(nums[i]))
+      return [compliments.get(nums[i]), i]
+    else compliments.set(target - nums[i], i)
   }
 }
 
 console.log(twoSum([2, 7, 11, 15], 9))
+console.log(twoSum([3, 2, 4], 6))
+console.log(twoSum([3, 3], 6))
