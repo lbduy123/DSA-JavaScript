@@ -11,3 +11,11 @@
   - [Move zeroes](https://leetcode.com/problems/move-zeroes/description/)
   - [Contains duplicate](https://leetcode.com/problems/contains-duplicate/description/)
   - [Rotate array](https://leetcode.com/problems/rotate-array/description/)
+  - [Longest word](https://www.coderbyte.com/language/Longest%20Word)
+- Hash Table
+	- Hash table implementation
+  - First reccuring character
+- Linked List
+	- Singly linked list implementation
+  - Reverse singly linked list method
+  - Doubly linked list implementation

@@ -29,7 +29,7 @@ class LinkedList {
   }
 
   insert(index, value) {
-    if (index > this.length) return this.append(value)
+    if (index >= this.length) return this.append(value)
     if (index <= 0) return this.prepend(value)
     let node = new Node(value)
     let prevNode = this.getNode(index - 1)
@@ -62,6 +62,38 @@ class LinkedList {
     return this.values()
   }
 
+  reverse() {
+    let values = []
+    while (this.head !== null) {
+      values.push(this.head.value)
+      this.head = this.head.next
+    }
+
+    this.head = new Node(values[values.length - 1])
+    this.tail = this.head
+    this.length = 1
+
+    for (let i = values.length - 2; i >= 0; i--) {
+      this.append(values[i])
+    }
+
+    return this.values()
+  }
+
+  reverse2() {
+    let prev = null;
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+    while (node !== null) {
+      let temp = node.next;
+      node.next = prev;
+      prev = node;
+      node = temp;
+    }
+    return this.values();
+  }
+
   values() {
     let values = []
     let _pointer = this.head
@@ -79,7 +111,9 @@ list.append(5)
 list.append(16)
 list.append(20)
 list.prepend(9)
-list.insert(1, 999)
+list.insert(6, 999)
 list.remove(1)
-console.log(list.remove(6))
+console.log(list.values())
+console.log(list.reverse())
+console.log(list.reverse2())
 
