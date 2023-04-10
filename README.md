@@ -19,3 +19,8 @@
 	- Singly linked list implementation
   - Reverse singly linked list method
   - Doubly linked list implementation
+- Stack & Queue
+	- Stack implementation with Linked List
+  - Stack implementation with Array
+  - Queue implementation with Linked List
+  - [Queue implementation with Stack](https://leetcode.com/problems/implement-queue-using-stacks/description/)
