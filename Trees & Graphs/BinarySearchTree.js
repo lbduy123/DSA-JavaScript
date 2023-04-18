@@ -1,4 +1,4 @@
-class TreeNode {
+export class TreeNode {
   constructor(value) {
     this.left = null
     this.right = null
@@ -6,7 +6,7 @@ class TreeNode {
   }
 }
 
-class BinarySearchTree {
+export class BinarySearchTree {
   constructor() {
     this.root = null
   }
@@ -125,6 +125,50 @@ class BinarySearchTree {
       }
     }
   }
+
+  breadthFirstSearch() {
+    let current = this.root
+    let values = []
+    let queue = [current]
+    while (queue.length > 0) {
+      let node = queue.shift()
+      values.push(node.value)
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
+    }
+    return values
+  }
+
+  breadthFirstSearchRecursive(queue = [this.root], values = []) {
+    if (!queue.length) return
+    let node = queue.shift()
+    values.push(node.value)
+    if (node.left) queue.push(node.left)
+    if (node.right) queue.push(node.right)
+    this.breadthFirstSearchRecursive(queue, values)
+    return values
+  }
+
+  DFSInorder(root = this.root, values = []) {
+    if (root.left) this.DFSInorder(root.left, values)
+    values.push(root.value)
+    if (root.right) this.DFSInorder(root.right, values)
+    return values
+  }
+
+  DFSPreorder(root = this.root, values = []) {
+    values.push(root.value)
+    if (root.left) this.DFSPreorder(root.left, values)
+    if (root.right) this.DFSPreorder(root.right, values)
+    return values
+  }
+
+  DFSPostorder(root = this.root, values = []) {
+    if (root.left) this.DFSPostorder(root.left, values)
+    if (root.right) this.DFSPostorder(root.right, values)
+    values.push(root.value)
+    return values
+  }
 }
 
 let tree = new BinarySearchTree()
@@ -135,9 +179,17 @@ tree.insert(20)
 tree.insert(170)
 tree.insert(15)
 tree.insert(1)
-console.log(tree.lookup(15))
+//        9
+//    4        20
+//  1   6   15    170
+// console.log(tree.lookup(15))
 let treeObject = (traverse(tree.root))
-console.log(JSON.stringify(treeObject))
+// console.log(JSON.stringify(treeObject))
+// console.log(tree.breadthFirstSearch())
+// console.log(tree.breadthFirstSearchRecursive())
+// console.log(tree.DFSInorder())
+// console.log(tree.DFSPreorder())
+// console.log(tree.DFSPostorder())
 
 function traverse(node) {
   const tree = { value: node.value };
