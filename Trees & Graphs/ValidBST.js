@@ -78,7 +78,7 @@ const isValidBST2 = root => {
   for (let i = 0; i < root.length; i++) {
     tree.insert(root[i])
   }
-  let treeArr = tree.breadthFirstSearch()
+  let treeArr = tree.breadthFirstSearchRecursive()
   for (let i = 0; i < root.length; i++) {
     if (treeArr[i] !== root[i]) return false
   }
@@ -101,25 +101,66 @@ const BSTByArr = arr => {
   return tree
 }
 
-const checkValidBSTByDFSInorder = (root) => {
-  if (root.left) {
-    if (root.left.value > root.value) return false
-    checkValidBSTByDFSInorder(root.left)
-  }
-  if (root.right) {
-    if (root.right.value < root.value) return false
-    checkValidBSTByDFSInorder(root.right)
-  }
-  return true
-}
-
 const isValidBST3 = root => {
   let tree = BSTByArr(root)
-  return checkValidBSTByDFSInorder(tree.root)
+  let isValid = true
+  const checkValidBSTByDFSInorder = (root) => {
+    if (!root || !isValid) {
+      return;
+    }
+
+    if (root.left) {
+      if (root.left.value >= root.value) isValid = false
+      checkValidBSTByDFSInorder(root.left)
+    }
+
+    if (root.right) {
+      if (root.right.value <= root.value) isValid = false
+      checkValidBSTByDFSInorder(root.right)
+    }
+  }
+  checkValidBSTByDFSInorder(tree.root)
+  return isValid
+}
+
+const isValidBST4 = root => {
+  let is_bst_valid = true;
+
+  let prev_node = new TreeNode(-Infinity, null, null);
+
+  // We will traverse the tree in-order.
+  // As a BST traversed in-order would result in something akin to a sorted array.
+  // [1,2,3,4,5,6,7,8,9]
+  // In the event we see something like this:
+  // [1,2,3,4,*99,6,7,8,9,10]
+  // We know it's not a valid BST.
+  const in_order_traverse = (node) => {
+
+    // Empty tree. Base case.
+    if (!node || !is_bst_valid) {
+      return;
+    }
+
+    in_order_traverse(node.left);
+
+    if (node.value <= prev_node.value) {
+      is_bst_valid = false;
+    }
+
+    prev_node = node;
+    in_order_traverse(node.right);
+  };
+
+  in_order_traverse(BSTByArr(root).root);
+
+  // Return the flag
+  return is_bst_valid;
 }
 
 let test1 = [5, 1, 4, null, null, 3, 6]
 let test2 = [2, 1, 3]
-console.log(isValidBST(test2))
-console.log(isValidBST2(test2))
-console.log(isValidBST3(test2))
+let test3 = [5, 4, 6, null, null, 3, 7]
+console.log(isValidBST(test3))
+console.log(isValidBST2(test3))
+console.log(isValidBST3(test3))
+console.log(isValidBST4(test3))
