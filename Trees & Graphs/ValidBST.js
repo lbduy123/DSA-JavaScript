@@ -27,7 +27,7 @@
 // The number of nodes in the tree is in the range[1, 104].
 // - 231 <= Node.val <= 231 - 1
 
-import { BinarySearchTree } from "./BinarySearchTree.js"
+import { TreeNode, BinarySearchTree } from "./BinarySearchTree.js"
 
 const getLevelIdxRange = level => {
   if (level === 0) return { low: 0, high: 0 }
@@ -85,7 +85,41 @@ const isValidBST2 = root => {
   return true
 }
 
+const BSTByArr = arr => {
+  let arrQueue = [...arr]
+  let tree = new BinarySearchTree()
+  tree.insert(arrQueue.shift())
+  let queue = []
+  queue.push(tree.root)
+  while (arrQueue.length > 0) {
+    let node = queue.shift()
+    node.left = new TreeNode(arrQueue.shift())
+    queue.push(node.left)
+    node.right = new TreeNode(arrQueue.shift())
+    queue.push(node.right)
+  }
+  return tree
+}
+
+const checkValidBSTByDFSInorder = (root) => {
+  if (root.left) {
+    if (root.left.value > root.value) return false
+    checkValidBSTByDFSInorder(root.left)
+  }
+  if (root.right) {
+    if (root.right.value < root.value) return false
+    checkValidBSTByDFSInorder(root.right)
+  }
+  return true
+}
+
+const isValidBST3 = root => {
+  let tree = BSTByArr(root)
+  return checkValidBSTByDFSInorder(tree.root)
+}
+
 let test1 = [5, 1, 4, null, null, 3, 6]
 let test2 = [2, 1, 3]
 console.log(isValidBST(test2))
 console.log(isValidBST2(test2))
+console.log(isValidBST3(test2))
