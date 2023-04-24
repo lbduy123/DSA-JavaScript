@@ -23,15 +23,25 @@
 // 1 <= nums.length <= 100
 // 0 <= nums[i] <= 400
 
+/* the order is: prev2, prev1, num  */
 const rob = nums => {
-  let oddSum = 0
-  let evenSum = 0
-  return Math.max(oddSum, evenSum)
+  if (nums.length == 0) return 0;
+  let prev1 = Math.max(nums[0], nums[1]);
+  let prev2 = nums[0];
+  for (let i = 2; i < nums.length; i++) {
+    let tmp = prev1;
+    prev1 = Math.max(prev2 + nums[i], prev1);
+    prev2 = tmp;
+  }
+  return prev1;
 }
 
 const input1 = [1, 2, 3, 1]
 const input2 = [2, 7, 9, 3, 1]
 const input3 = [2, 1, 1, 2]
+const input4 = [2, 4, 5, 4]
 
 console.log(rob(input1))
 console.log(rob(input2))
+console.log(rob(input3))
+console.log(rob(input4))
